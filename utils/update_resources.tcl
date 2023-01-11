@@ -14,7 +14,7 @@ link_design -part $::env(XRAY_PART)
 set clk_pins [get_package_pins -filter "IS_CLK_CAPABLE"]
 
 # three pins -> 1, 2, 3 on HR banks only
-set banks [get_iobanks -filter "BANK_TYPE==BT_HIGH_RANGE"]
+set banks [get_iobanks -filter "BANK_TYPE==BT_HIGH_PERFORMANCE || BANK_TYPE==BT_HIGH_RANGE"]
 
 set data_pins ""
 foreach bank [split $banks " "] {

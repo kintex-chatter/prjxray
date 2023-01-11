@@ -95,6 +95,13 @@ all:: 005-tilegrid/run.ok
 endif
 
 ifneq ($(XRAY_DATABASE),kintex7)
+    HAS_HIGH_PERFORMANCE_BANKS = 1
+endif
+ifneq ($(XRAY_DATABASE),virtex7)
+    HAS_HIGH_PERFORMANCE_BANKS = 1
+endif
+
+ifdef $(HAS_HIGH_PERFORMANCE_BANKS)
 $(eval $(call fuzzer,007-timing,005-tilegrid,all))
 endif
 $(eval $(call fuzzer,010-clb-lutinit,005-tilegrid,all))
@@ -113,29 +120,29 @@ $(eval $(call fuzzer,027-bram36-config,005-tilegrid,all))
 $(eval $(call fuzzer,028-fifo-config,005-tilegrid,all))
 $(eval $(call fuzzer,029-bram-fifo-config,005-tilegrid,all))
 $(eval $(call fuzzer,030-iob,005-tilegrid,all))
-ifeq ($(XRAY_DATABASE),kintex7)
+ifdef $(HAS_HIGH_PERFORMANCE_BANKS)
 $(eval $(call fuzzer,030-iob18,005-tilegrid,all))
 endif
 $(eval $(call fuzzer,031-cmt-mmcm,005-tilegrid,all))
 $(eval $(call fuzzer,032-cmt-pll,005-tilegrid,all))
 $(eval $(call fuzzer,034-cmt-pll-pips,005-tilegrid 071-ppips,all))
-ifneq ($(XRAY_DATABASE),kintex7)
+ifdef $(HAS_HIGH_PERFORMANCE_BANKS)
 # FIXME: 034b fuzzer is generating conflicting bits around the FREQ_BB[N] bits.
 # The fuzzer can be re-enabled once the conflicting bits are not generated anymore
 $(eval $(call fuzzer,034b-cmt-mmcm-pips,005-tilegrid 071-ppips,all))
 endif
 $(eval $(call fuzzer,035-iob-ilogic,005-tilegrid,all))
 $(eval $(call fuzzer,035a-iob-idelay,005-tilegrid,all))
-ifeq ($(XRAY_DATABASE),kintex7)
+ifdef $(HAS_HIGH_PERFORMANCE_BANKS)
 $(eval $(call fuzzer,035a-iob18-idelay,005-tilegrid,all))
 endif
 $(eval $(call fuzzer,035b-iob-iserdes,005-tilegrid,all))
 $(eval $(call fuzzer,036-iob-ologic,005-tilegrid,all))
-ifeq ($(XRAY_DATABASE),kintex7)
+ifdef $(HAS_HIGH_PERFORMANCE_BANKS)
 $(eval $(call fuzzer,036-iob18-ologic,005-tilegrid,all))
 endif
 $(eval $(call fuzzer,037-iob-pips,005-tilegrid 035b-iob-iserdes,all))
-ifeq ($(XRAY_DATABASE),kintex7)
+ifdef $(HAS_HIGH_PERFORMANCE_BANKS)
 $(eval $(call fuzzer,037-iob18-pips,005-tilegrid 035b-iob-iserdes,all))
 endif
 $(eval $(call fuzzer,038-cfg,005-tilegrid,all))
@@ -148,7 +155,7 @@ $(eval $(call fuzzer,044-clk-bufg-pips,046-clk-bufg-muxed-pips,all))
 $(eval $(call fuzzer,045-hclk-cmt-pips,005-tilegrid,all))
 $(eval $(call fuzzer,046-clk-bufg-muxed-pips,005-tilegrid,all))
 $(eval $(call fuzzer,047-hclk-ioi-pips,005-tilegrid,all))
-ifeq ($(XRAY_DATABASE),kintex7)
+ifdef $(HAS_HIGH_PERFORMANCE_BANKS)
 $(eval $(call fuzzer,047-hclk-ioi18-pips,005-tilegrid,all))
 endif
 $(eval $(call fuzzer,047a-hclk-idelayctrl-pips,047-hclk-ioi-pips,all))

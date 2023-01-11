@@ -85,7 +85,7 @@ proc make_io_pad_sites {} {
         if {[llength $site] == 0} {
             continue
         }
-        if [string match IOB33* [get_property SITE_TYPE $site]] {
+        if [string match IOB18* [get_property SITE_TYPE $site]] {
             dict append io_pad_sites $site $pad
         }
     }
@@ -114,10 +114,10 @@ proc make_iob_sites {} {
 }
 
 proc assign_iobs_old {} {
-    set_property -dict "PACKAGE_PIN $::env(XRAY_PIN_00) IOSTANDARD LVCMOS33" [get_ports clk]
-    set_property -dict "PACKAGE_PIN $::env(XRAY_PIN_01) IOSTANDARD LVCMOS33" [get_ports di]
-    set_property -dict "PACKAGE_PIN $::env(XRAY_PIN_02) IOSTANDARD LVCMOS33" [get_ports do]
-    set_property -dict "PACKAGE_PIN $::env(XRAY_PIN_03) IOSTANDARD LVCMOS33" [get_ports stb]
+    set_property -dict "PACKAGE_PIN $::env(XRAY_PIN_00) IOSTANDARD LVCMOS18" [get_ports clk]
+    set_property -dict "PACKAGE_PIN $::env(XRAY_PIN_01) IOSTANDARD LVCMOS18" [get_ports di]
+    set_property -dict "PACKAGE_PIN $::env(XRAY_PIN_02) IOSTANDARD LVCMOS18" [get_ports do]
+    set_property -dict "PACKAGE_PIN $::env(XRAY_PIN_03) IOSTANDARD LVCMOS18" [get_ports stb]
 }
 
 proc assign_iobs {} {
@@ -129,9 +129,9 @@ proc assign_iobs {} {
     # Basic pins
     # XXX: not all pads are valid, but seems to be working for now
     # Maybe better to set to XRAY_PIN_* and take out of the list?
-    set_property -dict "PACKAGE_PIN [lindex $iopad 0] IOSTANDARD LVCMOS33" [get_ports clk]
-    set_property -dict "PACKAGE_PIN [lindex $iopad 1] IOSTANDARD LVCMOS33" [get_ports do]
-    set_property -dict "PACKAGE_PIN [lindex $iopad 2] IOSTANDARD LVCMOS33" [get_ports stb]
+    set_property -dict "PACKAGE_PIN [lindex $iopad 0] IOSTANDARD LVCMOS18" [get_ports clk]
+    set_property -dict "PACKAGE_PIN [lindex $iopad 1] IOSTANDARD LVCMOS18" [get_ports do]
+    set_property -dict "PACKAGE_PIN [lindex $iopad 2] IOSTANDARD LVCMOS18" [get_ports stb]
 
     # din bus
     set fixed_pins 3
@@ -139,7 +139,7 @@ proc assign_iobs {} {
     for {set i 0} {$i < [llength $iports]} {incr i} {
         set pad [lindex $iopad [expr $i+$fixed_pins]]
         set port [lindex $iports $i]
-        set_property -dict "PACKAGE_PIN $pad IOSTANDARD LVCMOS33" $port
+        set_property -dict "PACKAGE_PIN $pad IOSTANDARD LVCMOS18" $port
     }
 }
 

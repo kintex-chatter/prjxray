@@ -10,8 +10,8 @@ create_project -force -part $::env(XRAY_PART) design design
 read_verilog $::env(FUZDIR)/top.v
 synth_design -top top
 
-set_property -dict "PACKAGE_PIN $::env(XRAY_PIN_00) IOSTANDARD LVCMOS33" [get_ports i]
-set_property -dict "PACKAGE_PIN $::env(XRAY_PIN_01) IOSTANDARD LVCMOS33" [get_ports o]
+set_property -dict "PACKAGE_PIN $::env(XRAY_PIN_00) IOSTANDARD LVCMOS18" [get_ports i]
+set_property -dict "PACKAGE_PIN $::env(XRAY_PIN_01) IOSTANDARD LVCMOS18" [get_ports o]
 
 create_pblock roi
 resize_pblock [get_pblocks roi] -add "$::env(XRAY_ROI)"

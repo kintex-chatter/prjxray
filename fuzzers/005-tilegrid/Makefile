@@ -6,13 +6,31 @@
 #
 # SPDX-License-Identifier: ISC
 
+
+ifeq (${XRAY_DATABASE}, virtex7)
+HAS_HIGH_PERFORMANCE_BANKS = 1
+# TODO: some virtex devices have high range banks
+HAS_HIGH_RANGE_BANKS = 0
+endif
+ifeq (${XRAY_DATABASE}, kintex7)
+# xc7k420t/xc7k480t have no high performance banks
+ifneq (${XRAY_FABRIC}, $(filter ${XRAY_FABRIC}, xc7k480t))
+HAS_HIGH_PERFORMANCE_BANKS = 1
+else
+HAS_HIGH_PERFORMANCE_BANKS = 0
+endif
+endif
+
+
 FUZDIR=$(shell pwd)
 BUILD_FOLDER=build_${XRAY_PART}
 BUILD_DIR=$(FUZDIR)/$(BUILD_FOLDER)
 TILEGRID_TDB_DEPENDENCIES=
+ifeq (${HAS_HIGH_RANGE_BANKS}, 1)
 TILEGRID_TDB_DEPENDENCIES += iob/$(BUILD_FOLDER)/segbits_tilegrid.tdb
 TILEGRID_TDB_DEPENDENCIES += iob_int/$(BUILD_FOLDER)/segbits_tilegrid.tdb
 TILEGRID_TDB_DEPENDENCIES += ioi/$(BUILD_FOLDER)/segbits_tilegrid.tdb
+endif
 TILEGRID_TDB_DEPENDENCIES += monitor/$(BUILD_FOLDER)/segbits_tilegrid.tdb
 TILEGRID_TDB_DEPENDENCIES += bram/$(BUILD_FOLDER)/segbits_tilegrid.tdb
 TILEGRID_TDB_DEPENDENCIES += bram_block/$(BUILD_FOLDER)/segbits_tilegrid.tdb
@@ -48,9 +66,7 @@ TILEGRID_TDB_DEPENDENCIES += ps7_int/$(BUILD_FOLDER)/segbits_tilegrid.tdb
 endif
 
 # Kintex7 only fuzzers
-ifeq (${XRAY_DATABASE}, kintex7)
-# xc7k420t/xc7k480t have no high performance banks
-ifneq (${XRAY_FABRIC}, $(filter ${XRAY_FABRIC}, xc7k480t))
+ifeq (${HAS_HIGH_PERFORMANCE_BANKS}, 1)
 TILEGRID_TDB_DEPENDENCIES += iob18/$(BUILD_FOLDER)/segbits_tilegrid.tdb
 TILEGRID_TDB_DEPENDENCIES += iob18_int/$(BUILD_FOLDER)/segbits_tilegrid.tdb
 TILEGRID_TDB_DEPENDENCIES += ioi18/$(BUILD_FOLDER)/segbits_tilegrid.tdb
@@ -59,7 +75,6 @@ endif
 # These kintex parts give an empty design
 ifneq (${XRAY_FABRIC}, $(filter ${XRAY_FABRIC}, xc7k160t xc7k325t xc7k480t))
 TILEGRID_TDB_DEPENDENCIES += orphan_int_column/$(BUILD_FOLDER)/segbits_tilegrid.tdb
-endif
 endif
 
 BASICDB_TILEGRID=$(BUILD_FOLDER)/basicdb/${XRAY_FABRIC}/tilegrid.json

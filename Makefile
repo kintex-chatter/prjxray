@@ -136,7 +136,7 @@ check-license:
 # Targets related to Project X-Ray databases
 # ------------------------
 
-DATABASES=artix7 kintex7 zynq7 spartan7
+DATABASES=artix7 kintex7 zynq7 spartan7 virtex7
 
 define database
 
@@ -191,8 +191,9 @@ ARTIX_PARTS=artix7_50t artix7_200t
 ZYNQ_PARTS=zynq7010
 KINTEX_PARTS=kintex7_160t
 SPARTAN_PARTS=
+VIRTEX_PARTS=
 
-XRAY_PARTS=${ARTIX_PARTS} ${ZYNQ_PARTS} ${KINTEX_PARTS} ${SPARTAN_PARTS}
+XRAY_PARTS=${ARTIX_PARTS} ${ZYNQ_PARTS} ${KINTEX_PARTS} ${SPARTAN_PARTS} ${VIRTEX_PARTS}
 
 define multiple-parts
 
@@ -243,6 +244,13 @@ db-extras-kintex7-parts: $(addprefix db-part-only-,$(KINTEX_PARTS))
 db-extras-kintex7-roi: $(addprefix db-roi-only-,$(KINTEX_PARTS))
 
 db-extras-kintex7-harness:
+	@true
+
+db-extras-virtex7-parts: $(addprefix db-part-only-,$(VIRTEX_PARTS))
+
+db-extras-virtex7-roi: $(addprefix db-roi-only-,$(VIRTEX_PARTS))
+
+db-extras-virtex7-harness:
 	@true
 
 db-extras-spartan7-parts:
