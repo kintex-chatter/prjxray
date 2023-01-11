@@ -6,4 +6,5 @@
 #
 # SPDX-License-Identifier: ISC
 source "$::env(XRAY_DIR)/utils/utils.tcl"
+set_property IS_ENABLED 0 [get_drc_checks {PDRC-2}]
 generate_top
