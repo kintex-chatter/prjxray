@@ -50,11 +50,11 @@ def gen_sites():
         sites, _ = zip(*sorted(zip(sites, sites_y), key=lambda x: x[1]))
 
         if gridinfo.tile_type[0] == 'L':
-            int_grid_x = loc.grid_x + 3
+            int_grid_x = loc.grid_x + 2
             pad_grid_x = loc.grid_x - 1
             int_tile_type = 'INT_L'
         else:
-            int_grid_x = loc.grid_x - 3
+            int_grid_x = loc.grid_x - 2
             pad_grid_x = loc.grid_x + 1
             int_tile_type = 'INT_R'
 

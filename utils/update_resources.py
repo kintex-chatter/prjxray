@@ -71,6 +71,7 @@ def main():
 
         clk_pins = pins_json["clk_pins"].split()
         data_pins = pins_json["data_pins"].split()
+        print("pins json: ", str(pins_json))
         pins = {
             0: clk_pins[0],
             1: data_pins[0],

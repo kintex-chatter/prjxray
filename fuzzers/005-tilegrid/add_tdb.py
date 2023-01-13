@@ -40,6 +40,7 @@ def parse_addr(line, only_frame=False, get_base_frame=False):
 
 
 def load_db(fn):
+    print("===> opening file " + fn)
     for l in open(fn, "r"):
         l = l.strip()
         # FIXME: add offset to name
@@ -79,7 +80,7 @@ def load_db(fn):
         if not bitidx_up:
             bitidx = 0
         assert bitidx == 0, l
-        assert frame % 0x80 == 0, "Unaligned frame at 0x%08X" % frame
+        assert frame % 0x80 == 0, "Unaligned frame at 0x%08X in tile %s" % (frame, tile)
         yield (tile, frame, wordidx)
 
 
