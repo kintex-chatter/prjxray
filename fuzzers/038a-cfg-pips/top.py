@@ -91,13 +91,13 @@ module top();
     for site_type in [
         #"EFUSE_USR",
         #"DNA_PORT",
+        #"FRAME_ECCE2",   # no inputs
+        #"USR_ACCESSE2", # no inputs
         "ICAPE2",
         "BSCANE2",
         "DCIRESET",
         "CAPTUREE2",
-        "STARTUPE2",
-        "FRAME_ECCE2",
-        "USR_ACCESSE2"]:
+        "STARTUPE2"]:
         for _, site in gen_sites(site_type):
             print_site(ports[site_type], luts, site, site_type)
 

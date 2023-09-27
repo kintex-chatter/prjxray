@@ -10,9 +10,10 @@
 # SPDX-License-Identifier: ISC
 
 ports = {
-    "EFUSE_USR": [
-        # ("EFUSEUSR", 32), # Output
-    ],
+    # has no inputs
+    #"EFUSE_USR": [
+    #    # ("EFUSEUSR", 32), # Output
+    #],
     "DNA_PORT": [
         ("CLK",   1),
         ("DIN",   1),
@@ -63,19 +64,21 @@ ports = {
         ("USRDONEO",  1),
         ("USRDONETS", 1),
     ],
-    "FRAME_ECCE2": [
-        # ("CRCERROR",       1), # Output
-        # ("ECCERROR",       1), # Output
-        # ("ECCERRORSINGLE", 1), # Output
-        # ("FAR",           26), # Output
-        # ("SYNBIT",         5), # Output
-        # ("SYNDROME",      13), # Output
-        # ("SYNDROMEVAL ID", 1), # Output
-        # ("SYNWORD",        7), # Output
-    ],
-    "USR_ACCESSE2": [
-        # ("CFGCLK",    1), # Output
-        # ("DATA",     32), # Output
-        # ("DATAVALID", 1), # Output
-    ],
+    # has no inputs
+    #"FRAME_ECCE2": [
+    #    # ("CRCERROR",       1), # Output
+    #    # ("ECCERROR",       1), # Output
+    #    # ("ECCERRORSINGLE", 1), # Output
+    #    # ("FAR",           26), # Output
+    #    # ("SYNBIT",         5), # Output
+    #    # ("SYNDROME",      13), # Output
+    #    # ("SYNDROMEVAL ID", 1), # Output
+    #    # ("SYNWORD",        7), # Output
+    #],
+    # has no inputs
+    #"USR_ACCESSE2": [
+    #    # ("CFGCLK",    1), # Output
+    #    # ("DATA",     32), # Output
+    #    # ("DATAVALID", 1), # Output
+    #],
 }

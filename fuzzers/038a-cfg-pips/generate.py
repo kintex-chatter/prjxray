@@ -51,7 +51,7 @@ def main():
         for line in f:
             tile, pip, src, dst, pnum, pdir = line.split()
 
-            if not tile.startswith('CFG'):
+            if not tile.startswith('CFG_CENTER_MID'):
                 continue
 
             pip_prefix, _ = pip.split(".")
@@ -81,7 +81,7 @@ def main():
     for tile, pips_srcs_dsts in tiledata.items():
         tile_type = pips_srcs_dsts["type"]
         # we only do CFG_CENTER_MID for now
-        if tile_type == "CFG_CENTER_TOP":
+        if tile_type != "CFG_CENTER_MID":
             continue
         pips = pips_srcs_dsts["pips"]
 

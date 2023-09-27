@@ -15,9 +15,9 @@ RUN_OK = run.ok
 TODO_RE=".*"
 
 MAKETODO_FLAGS=--pip-type ${PIP_TYPE} --seg-type $(PIP_TYPE) --re $(TODO_RE) --sides "mid"
-N = 1
+N = 40
 
-SEGMATCH_FLAGS=-c 186
+SEGMATCH_FLAGS=-c 1
 
 A_PIPLIST=cfg_center.txt
 
