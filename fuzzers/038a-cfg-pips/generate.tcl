@@ -18,6 +18,7 @@ proc run {} {
 
     set_property IS_ENABLED 0 [get_drc_checks {REQP-21}]
     set_property IS_ENABLED 0 [get_drc_checks {REQP-25}]
+    set_property IS_ENABLED 0 [get_drc_checks {PDCN-2}]
 
     set_property CLOCK_DEDICATED_ROUTE FALSE [get_nets]
 

@@ -37,15 +37,17 @@ def print_site(ports, luts, site, site_type):
         for idx in range(0, width):
             rand = random.random()
 
-            if rand < 0.45:
-                source = "1'b0"
-            elif rand < 0.9:
-                source = "1'b1"
-            else:
-                source = luts.get_next_output_net()
+            # leave unconnected for some
+            if 0.5 <= rand:
+                if rand < 0.7:
+                    source = "1'b0"
+                elif rand < 0.9:
+                    source = "1'b1"
+                else:
+                    source = luts.get_next_output_net()
 
-            verilog_wires += "assign {}_{}[{}] = {};\n".format(
-                port, site, idx, source)
+                verilog_wires += "assign {}_{}[{}] = {};\n".format(
+                    port, site, idx, source)
 
         verilog_wires += "\n"
 

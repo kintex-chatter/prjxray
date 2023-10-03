@@ -33,7 +33,7 @@ proc print_tile_pips {tile_type filename} {
                 continue
             }
 
-            if { true } {
+            if { [string match "*STARTUP*" $dst_node] } {
                 set pip_string "$tile_type.[regsub {.*/} $dst ""].[regsub {.*/} $src ""]"
                 if ![dict exists $pips $pip_string] {
                     puts $fp $pip_string
