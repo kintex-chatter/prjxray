@@ -119,7 +119,14 @@ def add_tile_bits(
         done = True
         verbose and print(
             "%s: existing defintion for %s" % (tile_name, block_type))
-        assert block["baseaddr"] == baseaddr_str
+        is_7045 = "xc7z045" in os.environ["XRAY_PART"]
+        if is_7045:
+            # Has INT_L_X18Y150, orig baseaddr 0x00440900, new 0x00000900 on Zynq 7045
+            if block["baseaddr"] != baseaddr_str:
+                print("orig baseaddr %s, new %s on Zynq 7045" % (
+                    block["baseaddr"], baseaddr_str))
+        else:
+            assert block["baseaddr"] == baseaddr_str
         assert block["frames"] == frames, (block, frames)
         # TODO: HACK: some of the offsets of the K480T seem to be messed up
         # using the maximum offset below seems to make most sense when looking

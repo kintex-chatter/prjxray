@@ -9,6 +9,7 @@ settings/*/resources.yaml
 **/output
 run.ok
 run.*.ok
+run-*.*.ok
 __pycache__
 *.pyc
 *.swp

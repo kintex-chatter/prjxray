@@ -30,6 +30,14 @@ def gen_sites():
 
         for site_name, site_type in gridinfo.sites.items():
             if site_type == 'IOB33S':
+                # Zynq 7045 have an nearly unbonded IO bank X0Y0 even on largest footprint
+                is_7045 = "xc7z045" in os.environ["XRAY_PART"]
+                unbonded_ios = ["LIOB33_X0Y" + str(i) for i in 
+                                [1, 3, 5, 7, 9, 13, 15, 17, 19, 29, 31, 33, 35, 39, 41, 43, 45, 47]]
+                unbonded_ios.append("LIOI3_SING_X0Y0")
+                unbonded_ios.append("LIOI3_SING_X0Y49")
+                if (is_7045 and tile_name in unbonded_ios):
+                    continue
                 yield tile_name, site_name
 
 

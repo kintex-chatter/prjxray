@@ -45,6 +45,16 @@ endif
 # Zynq7 only fuzzers
 ifeq (${XRAY_DATABASE}, zynq7)
 TILEGRID_TDB_DEPENDENCIES += ps7_int/$(BUILD_FOLDER)/segbits_tilegrid.tdb
+ifeq (${XRAY_FABRIC}, $(filter ${XRAY_FABRIC}, xc7z030 xc7z045 xc7z100))
+TILEGRID_TDB_DEPENDENCIES += iob18/$(BUILD_FOLDER)/segbits_tilegrid.tdb
+TILEGRID_TDB_DEPENDENCIES += iob18_int/$(BUILD_FOLDER)/segbits_tilegrid.tdb
+TILEGRID_TDB_DEPENDENCIES += ioi18/$(BUILD_FOLDER)/segbits_tilegrid.tdb
+#TILEGRID_TDB_DEPENDENCIES += pcie/$(BUILD_FOLDER)/segbits_tilegrid.tdb
+#TILEGRID_TDB_DEPENDENCIES += pcie_int_interface/$(BUILD_FOLDER)/segbits_tilegrid.tdb
+# TODO: This has issue with 7030: tdb uncertainty?
+#PCIE_INT_INTERFACE_L_X66Y0.DWORD:0.AUTO_FRAME 0044211A_000_00
+#PCIE_INT_INTERFACE_R_X63Y0.DWORD:0.AUTO_FRAME <6 candidates>
+endif
 endif
 
 # Kintex7 only fuzzers
@@ -80,98 +90,100 @@ ${BASICDB_TILEGRID}: generate.py $(BUILD_FOLDER)/tiles/tiles.txt
 		--pin_func $(BUILD_DIR)/tiles/pin_func.txt \
 		--out ${BUILD_DIR}/basicdb/${XRAY_FABRIC}/tilegrid.json
 
+OKFLAG=run-005.${XRAY_PART}.ok
+
 clb/$(BUILD_FOLDER)/segbits_tilegrid.tdb: ${BASICDB_TILEGRID}
-	cd clb && $(MAKE)
+	cd clb && test -s ${OKFLAG} || ($(MAKE) && touch ${OKFLAG})
 
 clb_int/$(BUILD_FOLDER)/segbits_tilegrid.tdb: ${BASICDB_TILEGRID}
-	cd clb_int && $(MAKE)
+	cd clb_int && test -s ${OKFLAG} || ($(MAKE) && touch ${OKFLAG})
 
 cfg/$(BUILD_FOLDER)/segbits_tilegrid.tdb: ${BASICDB_TILEGRID}
-	cd cfg && $(MAKE)
+	cd cfg && test -s ${OKFLAG} || ($(MAKE) && touch ${OKFLAG})
 
 iob/$(BUILD_FOLDER)/segbits_tilegrid.tdb: ${BASICDB_TILEGRID}
-	cd iob && $(MAKE)
+	cd iob && test -s ${OKFLAG} || ($(MAKE) && touch ${OKFLAG})
 
 iob18/$(BUILD_FOLDER)/segbits_tilegrid.tdb: ${BASICDB_TILEGRID}
-	cd iob18 && $(MAKE)
+	cd iob18 && test -s ${OKFLAG} || ($(MAKE) && touch ${OKFLAG})
 
 iob_int/$(BUILD_FOLDER)/segbits_tilegrid.tdb: ${BASICDB_TILEGRID}
-	cd iob_int && $(MAKE)
+	cd iob_int && test -s ${OKFLAG} || ($(MAKE) && touch ${OKFLAG})
 
 iob18_int/$(BUILD_FOLDER)/segbits_tilegrid.tdb: ${BASICDB_TILEGRID}
-	cd iob18_int && $(MAKE)
+	cd iob18_int && test -s ${OKFLAG} || ($(MAKE) && touch ${OKFLAG})
 
 ioi/$(BUILD_FOLDER)/segbits_tilegrid.tdb: ${BASICDB_TILEGRID}
-	cd ioi && $(MAKE)
+	cd ioi && test -s ${OKFLAG} || ($(MAKE) && touch ${OKFLAG})
 
 ioi18/$(BUILD_FOLDER)/segbits_tilegrid.tdb: ${BASICDB_TILEGRID}
-	cd ioi18 && $(MAKE)
+	cd ioi18 && test -s ${OKFLAG} || ($(MAKE) && touch ${OKFLAG})
 
 mmcm/$(BUILD_FOLDER)/segbits_tilegrid.tdb: ${BASICDB_TILEGRID}
-	cd mmcm && $(MAKE)
+	cd mmcm && test -s ${OKFLAG} || ($(MAKE) && touch ${OKFLAG})
 
 pll/$(BUILD_FOLDER)/segbits_tilegrid.tdb: ${BASICDB_TILEGRID}
-	cd pll && $(MAKE)
+	cd pll && test -s ${OKFLAG} || ($(MAKE) && touch ${OKFLAG})
 
 ps7_int/$(BUILD_FOLDER)/segbits_tilegrid.tdb: ${BASICDB_TILEGRID}
-	cd ps7_int && $(MAKE)
+	cd ps7_int && test -s ${OKFLAG} || ($(MAKE) && touch ${OKFLAG})
 
 monitor/$(BUILD_FOLDER)/segbits_tilegrid.tdb: ${BASICDB_TILEGRID}
-	cd monitor && $(MAKE)
+	cd monitor && test -s ${OKFLAG} || ($(MAKE) && touch ${OKFLAG})
 
 monitor_int/$(BUILD_FOLDER)/segbits_tilegrid.tdb: ${BASICDB_TILEGRID}
-	cd monitor_int && $(MAKE)
+	cd monitor_int && test -s ${OKFLAG} || ($(MAKE) && touch ${OKFLAG})
 
 bram/$(BUILD_FOLDER)/segbits_tilegrid.tdb: ${BASICDB_TILEGRID}
-	cd bram && $(MAKE)
+	cd bram && test -s ${OKFLAG} || ($(MAKE) && touch ${OKFLAG})
 
 bram_block/$(BUILD_FOLDER)/segbits_tilegrid.tdb: ${BASICDB_TILEGRID}
-	cd bram_block && $(MAKE)
+	cd bram_block && test -s ${OKFLAG} || ($(MAKE) && touch ${OKFLAG})
 
 bram_int/$(BUILD_FOLDER)/segbits_tilegrid.tdb: ${BASICDB_TILEGRID}
-	cd bram_int && $(MAKE)
+	cd bram_int && test -s ${OKFLAG} || ($(MAKE) && touch ${OKFLAG})
 
 dsp/$(BUILD_FOLDER)/segbits_tilegrid.tdb: ${BASICDB_TILEGRID}
-	cd dsp && $(MAKE)
+	cd dsp && test -s ${OKFLAG} || ($(MAKE) && touch ${OKFLAG})
 
 dsp_int/$(BUILD_FOLDER)/segbits_tilegrid.tdb: ${BASICDB_TILEGRID}
-	cd dsp_int && $(MAKE)
+	cd dsp_int && test -s ${OKFLAG} || ($(MAKE) && touch ${OKFLAG})
 
 fifo_int/$(BUILD_FOLDER)/segbits_tilegrid.tdb: ${BASICDB_TILEGRID}
-	cd fifo_int && $(MAKE)
+	cd fifo_int && test -s ${OKFLAG} || ($(MAKE) && touch ${OKFLAG})
 
 cfg_int/$(BUILD_FOLDER)/segbits_tilegrid.tdb: ${BASICDB_TILEGRID}
-	cd cfg_int && $(MAKE)
+	cd cfg_int && test -s ${OKFLAG} || ($(MAKE) && touch ${OKFLAG})
 
 orphan_int_column/$(BUILD_FOLDER)/segbits_tilegrid.tdb: ${BASICDB_TILEGRID}
-	cd orphan_int_column && $(MAKE)
+	cd orphan_int_column && test -s ${OKFLAG} || ($(MAKE) && touch ${OKFLAG})
 
 clk_hrow/$(BUILD_FOLDER)/segbits_tilegrid.tdb: ${BASICDB_TILEGRID}
-	cd clk_hrow && $(MAKE)
+	cd clk_hrow && test -s ${OKFLAG} || ($(MAKE) && touch ${OKFLAG})
 
 clk_bufg/$(BUILD_FOLDER)/segbits_tilegrid.tdb: ${BASICDB_TILEGRID}
-	cd clk_bufg && $(MAKE)
+	cd clk_bufg && test -s ${OKFLAG} || ($(MAKE) && touch ${OKFLAG})
 
 hclk_cmt/$(BUILD_FOLDER)/segbits_tilegrid.tdb: ${BASICDB_TILEGRID}
-	cd hclk_cmt && $(MAKE)
+	cd hclk_cmt && test -s ${OKFLAG} || ($(MAKE) && touch ${OKFLAG})
 
 hclk_ioi/$(BUILD_FOLDER)/segbits_tilegrid.tdb: ${BASICDB_TILEGRID}
-	cd hclk_ioi && $(MAKE)
+	cd hclk_ioi && test -s ${OKFLAG} || ($(MAKE) && touch ${OKFLAG})
 
 pcie/$(BUILD_FOLDER)/segbits_tilegrid.tdb: ${BASICDB_TILEGRID}
-	cd pcie && $(MAKE)
+	cd pcie && test -s ${OKFLAG} || ($(MAKE) && touch ${OKFLAG})
 
 pcie_int_interface/$(BUILD_FOLDER)/segbits_tilegrid.tdb: ${BASICDB_TILEGRID}
-	cd pcie_int_interface && $(MAKE)
+	cd pcie_int_interface && test -s ${OKFLAG} || ($(MAKE) && touch ${OKFLAG})
 
 gtp_common/$(BUILD_FOLDER)/segbits_tilegrid.tdb: ${BASICDB_TILEGRID}
-	cd gtp_common && $(MAKE)
+	cd gtp_common && test -s ${OKFLAG} || ($(MAKE) && touch ${OKFLAG})
 
 gtp_channel/$(BUILD_FOLDER)/segbits_tilegrid.tdb: ${BASICDB_TILEGRID}
-	cd gtp_channel && $(MAKE)
+	cd gtp_channel && test -s ${OKFLAG} || ($(MAKE) && touch ${OKFLAG})
 
 gtp_int_interface/$(BUILD_FOLDER)/segbits_tilegrid.tdb: ${BASICDB_TILEGRID}
-	cd gtp_int_interface && $(MAKE)
+	cd gtp_int_interface && test -s ${OKFLAG} || ($(MAKE) && touch ${OKFLAG})
 
 $(BUILD_FOLDER)/tilegrid_tdb.json: add_tdb.py $(TILEGRID_TDB_DEPENDENCIES)
 	python3 add_tdb.py \
@@ -189,7 +201,8 @@ run:
 
 clean:
 	rm -rf build_* run.*.ok
-	cd clb && $(MAKE) clean
+	find . | grep run-005.*.ok | xargs rm -rf
+	cd clb && rm run.${XRAY_PART}.ok && $(MAKE) clean
 	cd clb_int && $(MAKE) clean
 	cd cfg && $(MAKE) clean
 	cd iob && $(MAKE) clean
@@ -222,6 +235,7 @@ clean:
 	cd gtp_int_interface && $(MAKE) clean
 
 clean_part:
+	find . | grep ${OKFLAG} | xargs rm -rf
 	rm -rf $(BUILD_FOLDER) run.${XRAY_PART}.ok
 	cd clb && $(MAKE) clean_part
 	cd clb_int && $(MAKE) clean_part

@@ -16,7 +16,11 @@ database: $(SPECIMENS_OK)
 
 pushdb:
 	mkdir -p ${XRAY_FAMILY_DIR}/${XRAY_PART}/
+ifneq ($(filter xc7z045%, ${XRAY_PART}),)
+	sed '/IOB_X0Y[0-4][0-9]/d' $(BUILD_DIR)/specimen_001/*_package_pins.csv > ${XRAY_FAMILY_DIR}/${XRAY_PART}/package_pins.csv
+else
 	cp $(BUILD_DIR)/specimen_001/*_package_pins.csv ${XRAY_FAMILY_DIR}/${XRAY_PART}/package_pins.csv
+endif
 
 $(SPECIMENS_OK):
 	bash generate.sh $(subst /OK,,$@)

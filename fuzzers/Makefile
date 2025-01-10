@@ -84,10 +84,25 @@ fuzzer_$(1): fuzzer_ok/fuzzer_$(1)_$(XRAY_PART).ok
 
 endef
 
+SKIP_DSP=0
+HAS_PCIE=0
+HAS_GTP=0
+HAS_HIGH_PERFORMANCE_BANKS=0
 ifeq ($(XRAY_DATABASE),kintex7)
 HAS_HIGH_PERFORMANCE_BANKS=1
 else
-HAS_HIGH_PERFORMANCE_BANKS=0
+ifeq ($(XRAY_DATABASE),artix7)
+HAS_PCIE=1
+HAS_GTP=1
+else
+ifeq (${XRAY_FABRIC}, $(filter ${XRAY_FABRIC}, xc7z030 xc7z045 xc7z100))
+HAS_HIGH_PERFORMANCE_BANKS=1
+# DSP fuzzer gives error on 7030, need to make sure 7020/7010 runs before 7030, and use their results
+SKIP_DSP=1 
+# PCIE hard block: can only use after GTX support comes
+HAS_PCIE=0
+endif
+endif
 endif
 $(eval $(call fuzzer,000-init-db,,part))
 
@@ -182,9 +197,11 @@ $(eval $(call fuzzer,075-pins,,part))
 ifeq ($(XRAY_DATABASE),zynq7)
 $(eval $(call fuzzer,076-ps7,,all))
 endif
-ifeq ($(XRAY_DATABASE),artix7)
+ifeq ($(HAS_PCIE),1)
 $(eval $(call fuzzer,061-pcie-conf,005-tilegrid,all))
 $(eval $(call fuzzer,062-pcie-int-pips,005-tilegrid,all))
+endif
+ifeq ($(HAS_GTP),1)
 $(eval $(call fuzzer,063-gtp-common-conf,005-tilegrid,part))
 $(eval $(call fuzzer,064-gtp-channel-conf,005-tilegrid,part))
 $(eval $(call fuzzer,065-gtp-common-pips,005-tilegrid,part))
@@ -194,7 +211,9 @@ endif
 endif
 endif
 $(eval $(call fuzzer,100-dsp-mskpat,005-tilegrid,all))
+ifneq ($(SKIP_DSP),1)
 $(eval $(call fuzzer,101-dsp-pips,005-tilegrid,all))
+endif
 
 quick:
 	$(MAKE) QUICK=Y

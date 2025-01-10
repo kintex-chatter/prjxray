@@ -3,3 +3,11 @@
   fabric: "xc7z020"
 "xc7z010":
   fabric: "xc7z010"
+"xc7z030":
+  fabric: "xc7z030"
+"xc7z035":
+  fabric: "xc7z045"
+"xc7z045":
+  fabric: "xc7z045"
+"xc7z100":
+  fabric: "xc7z100"
